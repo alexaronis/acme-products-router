@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk';//
 import logger from 'redux-logger';
 import axios from 'axios';
-
+//seperate the db always  
 const products = (state = [], action)=> {
   if(action.type === 'SET_PRODUCTS'){
     return action.products;
@@ -15,9 +15,9 @@ const products = (state = [], action)=> {
 
 const reducer = combineReducers({ products });
 
-const store = createStore(reducer, applyMiddleware(thunk, logger));
+const store = createStore(reducer, applyMiddleware(thunk, logger));//thukn allows us to put async code closer to our redux store
 
-export const fetchProducts = ()=> {
+export const fetchProducts = ()=> {//a thuunk alows us to use async and post/delete data from the api. it also defines the condition in which things in the store will change (like 'type') it interacts with useDispatch and getState
   return async(dispatch)=> {
     const response = await axios.get('/api/products');
     dispatch({ type: 'SET_PRODUCTS', products: response.data });
